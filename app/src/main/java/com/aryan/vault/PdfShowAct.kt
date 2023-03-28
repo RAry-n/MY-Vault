@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
@@ -12,29 +13,31 @@ import androidx.annotation.RequiresApi
 
 class PdfShowAct : AppCompatActivity() {
 
-    lateinit var wb_webView: WebView
-    lateinit var progressBar: ProgressBar
+    var mwb_webView: WebView? = null
+    var mprogressBar: ProgressBar? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_show)
+        mwb_webView = findViewById(R.id.wb_webView)
+        mprogressBar= findViewById(R.id.progressBar)
         val url: String? = intent.getStringExtra("URL").toString()
         if (url != null) {
 
             // wb_webView= findViewById(R.id.wb_webView)
-            wb_webView.settings.javaScriptEnabled = true
+            mwb_webView!!.settings.javaScriptEnabled = true
 
-            wb_webView.webViewClient = object : WebViewClient() {
+            mwb_webView!!.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    progressBar.visibility = View.GONE
-                    wb_webView.visibility = View.VISIBLE
+                    mprogressBar!!.visibility = GONE
+                    mwb_webView!!.visibility = View.VISIBLE
 
                 }
             }
-            wb_webView.loadUrl(url)
+            mwb_webView!!.loadUrl(url)
 
 
         }

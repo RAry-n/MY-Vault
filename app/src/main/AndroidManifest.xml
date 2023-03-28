@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Vault"
         tools:targetApi="31">
         <activity
+            android:name=".AboutAct"
+            android:exported="false" />
+        <activity
             android:name=".PdfShowAct"
             android:exported="false" />
         <activity

@@ -163,6 +163,10 @@ class MainActivity : AppCompatActivity() {
             //startActivity(Intent(this,ReadExternalData::class.java))
 
         }
+        binding.profilefab.setOnClickListener {
+            val intent = Intent(this, AboutAct::class.java)
+            startActivity(intent)
+        }
 
         tabLayout = binding.tabLayout
         viewPager = binding.viewPager
