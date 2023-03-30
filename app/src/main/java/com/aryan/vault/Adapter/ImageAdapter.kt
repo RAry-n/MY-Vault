@@ -16,7 +16,7 @@ import com.aryan.vault.R
 import com.bumptech.glide.Glide
 
 
-class ImageAdapter(val context:Context?,val list:ArrayList<UserId>) : RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
+class ImageAdapter(val context:Context?, var list:ArrayList<UserId>) : RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -54,6 +54,11 @@ class ImageAdapter(val context:Context?,val list:ArrayList<UserId>) : RecyclerVi
 
     }
 
+
+    fun searchDataList(searchList: ArrayList<UserId>) {
+        list = searchList
+        notifyDataSetChanged()
+    }
     class  MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
 
         val fileName : TextView = itemView.findViewById(R.id.fileName)

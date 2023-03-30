@@ -17,7 +17,7 @@ import com.aryan.vault.R.drawable.pdf
 import com.aryan.vault.UploadActivity
 
 
-class PdfAdapter(val context: Context?, val list:ArrayList<UserId>): RecyclerView.Adapter<PdfAdapter.MyViewHolder>() {
+class PdfAdapter(val context: Context?, var list:ArrayList<UserId>): RecyclerView.Adapter<PdfAdapter.MyViewHolder>() {
 
     private val userList = ArrayList<UserId>()
 
@@ -63,7 +63,10 @@ class PdfAdapter(val context: Context?, val list:ArrayList<UserId>): RecyclerVie
         notifyDataSetChanged()
 
     }
-
+    fun searchDataList(searchList: ArrayList<UserId>) {
+        list = searchList
+        notifyDataSetChanged()
+    }
     class  MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
 
         val fileName : TextView = itemView.findViewById(R.id.fileName)

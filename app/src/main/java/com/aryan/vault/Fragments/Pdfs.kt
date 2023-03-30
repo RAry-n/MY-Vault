@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -28,6 +29,8 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Pdfs : Fragment() {
@@ -93,10 +96,38 @@ class Pdfs : Fragment() {
             }
         })
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchList(newText)
+                return true
+            }
+        })
+
+
+
         return binding.root
 
 
     }
+    fun searchList(text: String) {
+        val searchList = ArrayList<UserId>()
+        //val dataClass = itemSnapshot.getValue(UserId::class.java)
+
+        for (dataClass in list) {
+            if (dataClass.fileName?.lowercase()
+                    ?.contains(text.lowercase(Locale.getDefault())) == true
+            ) {
+                searchList.add(dataClass)
+            }
+        }
+        adapter.searchDataList(searchList)
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
