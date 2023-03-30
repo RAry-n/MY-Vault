@@ -1,21 +1,22 @@
 package com.aryan.vault
 
-import android.annotation.SuppressLint
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
 
 class PdfShowAct : AppCompatActivity() {
 
     var mwb_webView: WebView? = null
     var mprogressBar: ProgressBar? = null
+    var pdf:String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +25,9 @@ class PdfShowAct : AppCompatActivity() {
         setContentView(R.layout.activity_pdf_show)
         mwb_webView = findViewById<View>(R.id.wb_webView) as WebView
         mprogressBar = findViewById(R.id.progressBar)
-        val url: String? = intent.getStringExtra("URL")
+        var url: String? = intent.getStringExtra("URL")
         if (url != null) {
-Toast.makeText(this,"$url",Toast.LENGTH_LONG).show()
+
             // wb_webView= findViewById(R.id.wb_webView)
             mwb_webView!!.settings.javaScriptEnabled = true
             mwb_webView!!.settings.safeBrowsingEnabled = true
@@ -39,7 +40,17 @@ Toast.makeText(this,"$url",Toast.LENGTH_LONG).show()
 
                 }
             }
-            mwb_webView!!.loadUrl("$url")
+            mwb_webView!!.settings.setSupportZoom(true)
+           // mwb_webView!!.settings.displayZoomControls.
+
+            try {
+                pdf = URLEncoder.encode(url, "UTF-8")
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
+            }
+          // mwb_webView.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=$url")
+            Toast.makeText(this,"$pdf",Toast.LENGTH_LONG).show()
+            mwb_webView!!.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=$pdf")
 
         }
     }
